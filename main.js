@@ -5,7 +5,12 @@ casper.on('remote.message', function (msg){
 });
 
 casper.start("http://www.google.nl/", function() {
-  var title = this.getTitle();
-  console.log(title);
+	this.fill('form', {q: 'hello world'},true);
+})
+.then(function(){
+	this.capture('./output/output.png');
 });
+
+
+
 casper.run();
