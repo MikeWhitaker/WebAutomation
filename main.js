@@ -1,11 +1,11 @@
 var casper = require("casper").create();
+
+casper.on('remote.message', function (msg){
+	console.log('remote message is: ', msg);
+});
+
 casper.start("http://www.google.nl/", function() {
-	var message = "this is the page title: ";
-  var title = this.evaluate(function(message) {
-    console.log("in title");
-    var title = document.title;
-    return message + title;
-  }, message);
+  var title = this.getTitle();
   console.log(title);
 });
 casper.run();
