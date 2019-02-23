@@ -1,9 +1,11 @@
-var casper = require('casper').create();
-casper.start('http://www.google.nl/', function(){
-	this.capture('./output/test.png');
-});
-casper.thenOpen('http://www.bing.com/', function(){
-	console.log('inside second statement');
-	this.capture('./output/test02.png');
+var casper = require("casper").create();
+casper.start("http://www.google.nl/", function() {
+	var message = "this is the page title: ";
+  var title = this.evaluate(function(message) {
+    console.log("in title");
+    var title = document.title;
+    return message + title;
+  }, message);
+  console.log(title);
 });
 casper.run();
