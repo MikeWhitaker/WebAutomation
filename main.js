@@ -1,3 +1,5 @@
 var casper = require('casper').create();
-console.log('hello world ...');
-casper.exit();
+casper.start('http://www.google.nl/', function(){
+	this.capture('./output/test.png')
+});
+casper.run();
