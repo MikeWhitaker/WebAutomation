@@ -1,5 +1,7 @@
 var casper = require("casper").create();
-var _ = require("underscore");
+var fs = require("fs");
+
+var data; //
 
 casper.on('remote.message', function (msg){
 	console.log('remote message is: ', msg);
@@ -10,7 +12,7 @@ casper.start("http://www.google.nl/", function() {
 	this.fill('form', {q: 'hello world'},true);
 })
 .wait(1000, function(){
-	var data = this.evaluate(function(){
+	data = this.evaluate(function(){
 		
 		var targetElements = document.querySelectorAll('.g h3 a');
 		var data = [];
@@ -27,7 +29,11 @@ casper.start("http://www.google.nl/", function() {
 		
 		return data;
 	});
+	
 	console.log(JSON.stringify(data));
 });
 
-casper.run();
+casper.run(function(){
+	fs.write('./output.json', JSON.stringify(data, null, '\t'));
+	this.exit();
+});
